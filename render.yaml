@@ -1,0 +1,19 @@
+# Render Blueprint — backend API (free plan). Render reads this file from the repo root.
+services:
+  - type: web
+    name: order-desk-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: MONGO_URL
+        sync: false   # paste your MongoDB Atlas connection string in the Render dashboard
+      - key: DB_NAME
+        value: orderdesk
+      - key: CORS_ORIGINS
+        value: "*"
